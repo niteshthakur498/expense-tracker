@@ -1,5 +1,4 @@
-package com.nitesh.ExpenseTracker.entity;
-
+package com.nitesh.ExpenseTracker.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,14 +8,11 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Expense {
-
-    //User Input Fields
+public class ExpenseDTO {
     private String userId;
 
     private String expenseId;
@@ -38,14 +34,4 @@ public class Expense {
     private String notes;
 
     private String attachmentId;
-
-    //optional Field
-    private String currency;
-
-    private BigDecimal exchangeRate;
-
-    //Audit Log
-    private LocalDate creationDate;
-
-
 }
