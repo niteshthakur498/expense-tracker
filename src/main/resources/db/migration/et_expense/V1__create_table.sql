@@ -6,7 +6,7 @@ CREATE TABLE et_expense (
     expense_date DATE NOT NULL,
     expense_location VARCHAR(255),
     tags VARCHAR(255),
-    category VARCHAR(255),
+    category_id VARCHAR(255),
     payment_method VARCHAR(255),
     notes VARCHAR(255),
     attachment_id VARCHAR(255),

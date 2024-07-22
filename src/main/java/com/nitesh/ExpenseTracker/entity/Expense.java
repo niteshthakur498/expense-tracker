@@ -46,8 +46,8 @@ public class Expense {
     @Column(name = "tags")
     private String tags;
 
-    @Column(name = "category")
-    private String category;
+    @Column(name = "category_id")
+    private String category_id;
 
     @Column(name = "payment_method")
     private String paymentMethod;
