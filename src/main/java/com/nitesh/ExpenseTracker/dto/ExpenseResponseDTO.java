@@ -40,6 +40,6 @@ public class ExpenseResponseDTO {
 
     private String currency;                // Currency of the expense
 
-    private LocalDateTime creationDate;        // Date when the expense was created
+    private LocalDateTime expenseInputTime;        // Date when the expense was created
 
 }

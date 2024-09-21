@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "et_expense")
+@IdClass(ExpenseId.class)
 public class Expense {
 
     //User Input Fields
@@ -47,7 +48,7 @@ public class Expense {
     private String tags;
 
     @Column(name = "category_id")
-    private String category_id;
+    private String categoryId;
 
     @Column(name = "payment_method")
     private String paymentMethod;
@@ -66,11 +67,12 @@ public class Expense {
     private BigDecimal exchangeRate;
 
     //Audit Log
-    @Column(name = "creation_date")
-    private LocalDateTime creationDate;
+    @Column(name = "expense_input_time")
+    private LocalDateTime expenseInputTime;
 
     @PrePersist
-    public void generateId(){
+    public void onCreate() {
         this.expenseId = IdGenerator.generateId("EXP");
+        this.expenseInputTime = LocalDateTime.now();
     }
 }
