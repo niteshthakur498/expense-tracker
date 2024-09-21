@@ -1,10 +1,8 @@
 package com.nitesh.ExpenseTracker.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.nitesh.ExpenseTracker.utils.IdGenerator;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +28,9 @@ public class Expense {
     @Id
     @Column(name = "expense_Id")
     private String expenseId;
+
+    @Column(name = "expense_title")
+    private String expenseTitle;
 
     @Column(name = "expense_description")
     private String expenseDescription;
@@ -69,5 +70,8 @@ public class Expense {
     @Column(name = "creation_date")
     private LocalDate creationDate;
 
-
+    @PrePersist
+    public void generateId(){
+        this.expenseId = IdGenerator.generateId("EXP");
+    }
 }
