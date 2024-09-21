@@ -1,6 +1,5 @@
 package com.nitesh.ExpenseTracker.entity;
 
-
 import com.nitesh.ExpenseTracker.utils.IdGenerator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,7 +9,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -68,7 +67,7 @@ public class Expense {
 
     //Audit Log
     @Column(name = "creation_date")
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     @PrePersist
     public void generateId(){
