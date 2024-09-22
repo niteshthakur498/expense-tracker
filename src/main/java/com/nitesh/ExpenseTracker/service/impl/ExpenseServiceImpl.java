@@ -60,6 +60,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ExpenseResponseDTO getExpenseById(String userId, String expenseId) {
+        log.info("Entered getExpenseById...");
         ExpenseId expenseKey = new ExpenseId(userId, expenseId);
         Expense expense = expenseRepository.findById(expenseKey)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense Record not found for Expense: " + expenseId));

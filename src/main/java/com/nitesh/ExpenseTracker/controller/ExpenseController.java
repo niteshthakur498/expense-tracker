@@ -2,6 +2,7 @@ package com.nitesh.ExpenseTracker.controller;
 
 import com.nitesh.ExpenseTracker.dto.ExpenseRequestDTO;
 import com.nitesh.ExpenseTracker.dto.ExpenseResponseDTO;
+import com.nitesh.ExpenseTracker.dto.ResponseWrapper;
 import com.nitesh.ExpenseTracker.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,43 +24,48 @@ public class ExpenseController {
     }
 
     @GetMapping("/{userId}/expenses")
-    public ResponseEntity<List<ExpenseResponseDTO>> getExpenseByUser(@PathVariable String userId) {
+    public ResponseEntity<ResponseWrapper<List<ExpenseResponseDTO>>> getExpenseByUser(@PathVariable String userId) {
         List<ExpenseResponseDTO> userExpenses = expenseService.getAllUserExpenses(userId);
-        return ResponseEntity.ok(userExpenses);
+        ResponseWrapper<List<ExpenseResponseDTO>> response = new ResponseWrapper<>(HttpStatus.OK.value(), "Successfully Retrieved", userExpenses, null);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{userId}/expenses")
-    public ResponseEntity<ExpenseResponseDTO> createExpense(@PathVariable String userId,
-                                                            @RequestBody ExpenseRequestDTO expenseRequest) {
-        ExpenseResponseDTO createdExpense = expenseService.addExpense(expenseRequest);
+    public ResponseEntity<ResponseWrapper<ExpenseResponseDTO>> createExpense(@PathVariable String userId,
+                                                                             @RequestBody ExpenseRequestDTO expenseRequest) {
+        ExpenseResponseDTO expenseResponseDTO = expenseService.addExpense(expenseRequest);
+        ResponseWrapper<ExpenseResponseDTO> response = new ResponseWrapper<>(HttpStatus.OK.value(), "Successfully Created", expenseResponseDTO, null);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(createdExpense);
+                .body(response);
 
     }
 
     @PutMapping("/{userId}/expenses/{expenseId}")
-    public ResponseEntity<ExpenseResponseDTO> updateExpense(@PathVariable String userId,
-                                                            @PathVariable String expenseId,
-                                                            @RequestBody ExpenseRequestDTO expenseRequest) {
+    public ResponseEntity<ResponseWrapper<ExpenseResponseDTO>> updateExpense(@PathVariable String userId,
+                                                                             @PathVariable String expenseId,
+                                                                             @RequestBody ExpenseRequestDTO expenseRequest) {
         ExpenseResponseDTO expenseResponseDTO = expenseService.updateExpense(userId, expenseId, expenseRequest);
+        ResponseWrapper<ExpenseResponseDTO> response = new ResponseWrapper<>(HttpStatus.OK.value(), "Successfully Updated", expenseResponseDTO, null);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(expenseResponseDTO);
+                .body(response);
 
     }
 
     @GetMapping("/{userId}/expenses/{expenseId}")
-    public ResponseEntity<ExpenseResponseDTO> getExpenseById(@PathVariable String userId,
-                                                             @PathVariable String expenseId) {
+    public ResponseEntity<ResponseWrapper<ExpenseResponseDTO>> getExpenseById(@PathVariable String userId,
+                                                                              @PathVariable String expenseId) {
         ExpenseResponseDTO expenseResponseDTO = expenseService.getExpenseById(userId, expenseId);
+        ResponseWrapper<ExpenseResponseDTO> response = new ResponseWrapper<>(HttpStatus.OK.value(), "Successfully Retrieved", expenseResponseDTO, null);
         return ResponseEntity.status(200)
-                .body(expenseResponseDTO);
+                .body(response);
     }
 
     @DeleteMapping("/{userId}/expenses/{expenseId}")
-    public ResponseEntity<String> deleteExpense(@PathVariable String userId,
-                                                @PathVariable String expenseId) {
+    public ResponseEntity<ResponseWrapper<String>> deleteExpense(@PathVariable String userId,
+                                                                 @PathVariable String expenseId) {
 
         expenseService.deleteExpense(userId, expenseId);
-        return ResponseEntity.ok("Expense Successfully Deleted");
+        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(), "Successfully Deleted", null, null);
+        return ResponseEntity.ok(response);
     }
 }
