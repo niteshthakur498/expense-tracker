@@ -13,8 +13,8 @@
             logs/app.log
         </file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>app-%d{yy-MM-dd}.%i.log</fileNamePattern>
-            <maxFileSize>10MB</maxFileSize>
+            <fileNamePattern>logs/app-%d{yy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>

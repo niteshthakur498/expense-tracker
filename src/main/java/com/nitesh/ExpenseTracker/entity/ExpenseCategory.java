@@ -14,12 +14,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "et_categories")
+@Table(name = "et_category")
 public class ExpenseCategory {
 
     @Id
-    @Column(name = "category_Id")
+    @Column(name = "category_id")
     private String categoryId;
+
+    @Column(name = "category_title")
+    private String categoryTitle;
 
     @Column(name = "category_description")
     private String categoryDescription;

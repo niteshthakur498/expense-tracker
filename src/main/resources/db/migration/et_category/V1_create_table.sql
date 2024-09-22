@@ -1,5 +1,5 @@
-CREATE TABLE et_expense_attachment (
+CREATE TABLE et_category (
     category_id VARCHAR(255),
-    category_title VARCHAR(255),
-    category_description VARCHAR(255)
+    category_title TEXT,
+    category_description TEXT
 );
