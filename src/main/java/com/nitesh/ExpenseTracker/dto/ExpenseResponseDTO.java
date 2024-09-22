@@ -30,8 +30,6 @@ public class ExpenseResponseDTO {
 
     private String categoryId;              // Category of the expense
 
-    private String categoryTitle;           // Category Title of the expense
-
     private String paymentMethod;           // Payment method used
 
     private String notes;                   // Additional notes
