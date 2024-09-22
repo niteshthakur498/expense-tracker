@@ -46,7 +46,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         ExpenseId expenseKey = new ExpenseId(userId, expenseId);
         Expense existingExpense = expenseRepository.findById(expenseKey)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense Record not found for Expense: " + expenseId));
-        log.info("Expense Record Found for Modification...");
+        log.debug("Expense Record Found for Modification...");
         expenseMapper.map(expenseRequest, existingExpense);
         Expense updatedExpense = expenseRepository.save(existingExpense);
         return expenseMapper.toResponseDTO(updatedExpense);
@@ -57,17 +57,17 @@ public class ExpenseServiceImpl implements ExpenseService {
         ExpenseId expenseKey = new ExpenseId(userId, expenseId);
         Expense expense = expenseRepository.findById(expenseKey)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense Record not found for Expense: " + expenseId));
-        log.info("Expense Record Found for Deletion..");
+        log.debug("Expense Record Found for Deletion..");
         expenseRepository.deleteById(expenseKey);
     }
 
     @Override
     public ExpenseResponseDTO getExpenseById(String userId, String expenseId) {
-        log.info("Entered getExpenseById...");
+        log.debug("Entered getExpenseById...");
         ExpenseId expenseKey = new ExpenseId(userId, expenseId);
         Expense expense = expenseRepository.findById(expenseKey)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense Record not found for Expense: " + expenseId));
-        log.info("Expense Record Found...");
+        log.debug("Expense Record Found...");
         return expenseMapper.toResponseDTO(expense);
     }
 

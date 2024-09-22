@@ -1,0 +1,1 @@
+--CREATE TYPE et_event_status_enum AS ENUM ('O','C');

@@ -13,7 +13,7 @@ public interface ExpenseService {
                                      String expenseId,
                                      ExpenseRequestDTO expenseRequest);
 
-    void deleteExpense(String expenseId, String id);
+    void deleteExpense(String userId, String expenseId);
 
     ExpenseResponseDTO getExpenseById(String userId, String expenseId);
 
