@@ -8,6 +8,7 @@ import com.nitesh.ExpenseTracker.exception.ResourceNotFoundException;
 import com.nitesh.ExpenseTracker.mapper.ExpenseMapper;
 import com.nitesh.ExpenseTracker.repository.ExpenseRepository;
 import com.nitesh.ExpenseTracker.service.ExpenseService;
+import com.nitesh.ExpenseTracker.validator.ExpenseValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,17 +21,19 @@ import java.util.stream.Collectors;
 public class ExpenseServiceImpl implements ExpenseService {
 
     private final ExpenseRepository expenseRepository;
-
+    private final ExpenseValidator expenseValidator;
     private final ExpenseMapper expenseMapper;
 
     @Autowired
-    public ExpenseServiceImpl(ExpenseRepository expenseRepository, ExpenseMapper expenseMapper) {
+    public ExpenseServiceImpl(ExpenseRepository expenseRepository, ExpenseMapper expenseMapper, ExpenseValidator expenseValidator) {
         this.expenseRepository = expenseRepository;
         this.expenseMapper = expenseMapper;
+        this.expenseValidator = expenseValidator;
     }
 
     @Override
     public ExpenseResponseDTO addExpense(ExpenseRequestDTO expenseRequest) {
+        expenseValidator.validateExpense(expenseRequest);
         Expense expense = expenseMapper.toEntity(expenseRequest);
         Expense cratedExpense = expenseRepository.save(expense);
         return expenseMapper.toResponseDTO(cratedExpense);
