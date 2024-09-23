@@ -1,6 +1,5 @@
 package com.nitesh.ExpenseTracker.entity;
 
-import com.nitesh.ExpenseTracker.utils.IdGenerator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,17 +16,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "et_expense")
-@IdClass(ExpenseId.class)
 public class Expense {
 
-    //User Input Fields
     @Id
-    @Column(name = "user_Id")
-    private String userId;
-
-    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "expense_id_seq_generator")
+    @SequenceGenerator(name = "expense_id_seq_generator", sequenceName = "et_seq_expense_id", allocationSize = 1)
     @Column(name = "expense_Id")
-    private String expenseId;
+    private Long expenseId;
+
+    @Column(name = "user_Id")
+    private Long userId;
 
     @Column(name = "expense_title")
     private String expenseTitle;
@@ -48,7 +46,7 @@ public class Expense {
     private String tags;
 
     @Column(name = "category_id")
-    private String categoryId;
+    private Long categoryId;
 
     @Column(name = "payment_method")
     private String paymentMethod;
@@ -57,7 +55,7 @@ public class Expense {
     private String notes;
 
     @Column(name = "attachment_id")
-    private String attachmentId;
+    private Long attachmentId;
 
     //optional Field
     @Column(name = "currency")
@@ -72,7 +70,6 @@ public class Expense {
 
     @PrePersist
     public void onCreate() {
-        this.expenseId = IdGenerator.generateId("EXP");
         this.expenseInputTime = LocalDateTime.now();
     }
 }

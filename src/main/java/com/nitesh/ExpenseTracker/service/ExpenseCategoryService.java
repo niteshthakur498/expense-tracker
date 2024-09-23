@@ -8,5 +8,5 @@ import java.util.List;
 public interface ExpenseCategoryService {
     List<ExpenseCategoryDTO> getAllCategories();
 
-    ExpenseCategoryDTO getCategory(String categoryId);
+    ExpenseCategoryDTO getCategory(Long categoryId);
 }

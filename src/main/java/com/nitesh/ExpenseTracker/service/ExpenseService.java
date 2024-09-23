@@ -9,13 +9,13 @@ public interface ExpenseService {
 
     ExpenseResponseDTO addExpense(ExpenseRequestDTO expenseRequest);
 
-    ExpenseResponseDTO updateExpense(String userId,
-                                     String expenseId,
+    ExpenseResponseDTO updateExpense(Long userId,
+                                     Long expenseId,
                                      ExpenseRequestDTO expenseRequest);
 
-    void deleteExpense(String userId, String expenseId);
+    void deleteExpense(Long userId, Long expenseId);
 
-    ExpenseResponseDTO getExpenseById(String userId, String expenseId);
+    ExpenseResponseDTO getExpenseById(Long userId, Long expenseId);
 
-    List<ExpenseResponseDTO> getAllUserExpenses(String userId);
+    List<ExpenseResponseDTO> getAllUserExpenses(Long userId);
 }

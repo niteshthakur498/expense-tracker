@@ -33,7 +33,7 @@ public class ExpenseCategoryServiceImpl implements ExpenseCategoryService {
     }
 
     @Override
-    public ExpenseCategoryDTO getCategory(String categoryId) {
+    public ExpenseCategoryDTO getCategory(Long categoryId) {
         ExpenseCategory expenseCategory = expenseCategoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category Record not found for: " + categoryId));
         return expenseCategoryMapper.toResponseDTO(expenseCategory);

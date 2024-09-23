@@ -34,7 +34,7 @@ public class ExpenseCategoryController {
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<ResponseWrapper<ExpenseCategoryDTO>> getCategory(@PathVariable String categoryId) {
+    public ResponseEntity<ResponseWrapper<ExpenseCategoryDTO>> getCategory(@PathVariable Long categoryId) {
         ExpenseCategoryDTO expenseCategory = expenseCategoryService.getCategory(categoryId);
         ResponseWrapper<ExpenseCategoryDTO> response = new ResponseWrapper<>(HttpStatus.OK.value(), "Successfully Retrieved", expenseCategory, new ArrayList<>());
         return ResponseEntity.status(HttpStatus.OK)

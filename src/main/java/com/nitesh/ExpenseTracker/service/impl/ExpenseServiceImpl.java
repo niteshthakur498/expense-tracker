@@ -3,7 +3,6 @@ package com.nitesh.ExpenseTracker.service.impl;
 import com.nitesh.ExpenseTracker.dto.ExpenseRequestDTO;
 import com.nitesh.ExpenseTracker.dto.ExpenseResponseDTO;
 import com.nitesh.ExpenseTracker.entity.Expense;
-import com.nitesh.ExpenseTracker.entity.ExpenseId;
 import com.nitesh.ExpenseTracker.exception.ResourceNotFoundException;
 import com.nitesh.ExpenseTracker.mapper.ExpenseMapper;
 import com.nitesh.ExpenseTracker.repository.ExpenseRepository;
@@ -40,11 +39,10 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public ExpenseResponseDTO updateExpense(String userId,
-                                            String expenseId,
+    public ExpenseResponseDTO updateExpense(Long userId,
+                                            Long expenseId,
                                             ExpenseRequestDTO expenseRequest) {
-        ExpenseId expenseKey = new ExpenseId(userId, expenseId);
-        Expense existingExpense = expenseRepository.findById(expenseKey)
+        Expense existingExpense = expenseRepository.findById(expenseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense Record not found for Expense: " + expenseId));
         log.debug("Expense Record Found for Modification...");
         expenseMapper.map(expenseRequest, existingExpense);
@@ -53,26 +51,24 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public void deleteExpense(String userId, String expenseId) {
-        ExpenseId expenseKey = new ExpenseId(userId, expenseId);
-        Expense expense = expenseRepository.findById(expenseKey)
+    public void deleteExpense(Long userId, Long expenseId) {
+        Expense expense = expenseRepository.findById(expenseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense Record not found for Expense: " + expenseId));
         log.debug("Expense Record Found for Deletion..");
-        expenseRepository.deleteById(expenseKey);
+        expenseRepository.deleteById(expenseId);
     }
 
     @Override
-    public ExpenseResponseDTO getExpenseById(String userId, String expenseId) {
+    public ExpenseResponseDTO getExpenseById(Long userId, Long expenseId) {
         log.debug("Entered getExpenseById...");
-        ExpenseId expenseKey = new ExpenseId(userId, expenseId);
-        Expense expense = expenseRepository.findById(expenseKey)
+        Expense expense = expenseRepository.findById(expenseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense Record not found for Expense: " + expenseId));
         log.debug("Expense Record Found...");
         return expenseMapper.toResponseDTO(expense);
     }
 
     @Override
-    public List<ExpenseResponseDTO> getAllUserExpenses(String userId) {
+    public List<ExpenseResponseDTO> getAllUserExpenses(Long userId) {
         return expenseRepository.findByUserId(userId)
                 .stream()
                 .map(expenseMapper::toResponseDTO)

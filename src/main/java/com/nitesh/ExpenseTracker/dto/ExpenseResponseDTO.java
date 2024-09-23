@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExpenseResponseDTO {
-    private String userId;               // User who created the expense
+    private Long userId;               // User who created the expense
 
-    private String expenseId;             // Unique identifier of the expense
+    private Long expenseId;             // Unique identifier of the expense
 
     private String expenseTitle;         // Title of the expense
 
@@ -28,13 +28,13 @@ public class ExpenseResponseDTO {
 
     private String tags;                      // Tags associated with the expense
 
-    private String categoryId;              // Category of the expense
+    private Long categoryId;              // Category of the expense
 
     private String paymentMethod;           // Payment method used
 
     private String notes;                   // Additional notes
 
-    private String attachmentId;            // Attachment associated with the expense
+    private Long attachmentId;            // Attachment associated with the expense
 
     private String currency;                // Currency of the expense
 

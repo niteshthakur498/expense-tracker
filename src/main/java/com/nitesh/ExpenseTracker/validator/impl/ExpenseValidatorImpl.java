@@ -43,9 +43,9 @@ public class ExpenseValidatorImpl implements ExpenseValidator {
         }
     }
 
-    private void validateCategory(String categoryId, List<ErrorDetail> errors) {
+    private void validateCategory(Long categoryId, List<ErrorDetail> errors) {
         log.debug("Starting Validating Expense Category..");
-        if (categoryId.isEmpty()) {
+        if (categoryId == null || categoryId <= 0) {
             errors.add(new ErrorDetail("categoryId", "Category Id cannot be null"));
             return;
         }

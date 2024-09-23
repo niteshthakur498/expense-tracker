@@ -16,7 +16,7 @@ public class ExpenseRequestDTO {
 
     @NotBlank(message = "")
     @JsonProperty("userId")                // Maps this field to "userId" in the JSON
-    private String userId;
+    private Long userId;
 
     @NotBlank(message = "")
     @JsonProperty("expenseTitle")           // Maps this field to "expenseTitle" in the JSON
@@ -40,7 +40,7 @@ public class ExpenseRequestDTO {
     private String tags;
 
     @JsonProperty("categoryId")                 // Maps this field to "category" in the JSON
-    private String categoryId;
+    private Long categoryId;
 
     @JsonProperty("paymentMethod")            // Maps this field to "paymentMethod" in the JSON
     private String paymentMethod;
@@ -49,7 +49,7 @@ public class ExpenseRequestDTO {
     private String notes;
 
     @JsonProperty("attachmentId")             // Maps this field to "attachmentId" in the JSON
-    private String attachmentId;
+    private Long attachmentId;
 
     @NotBlank(message = "")
     @JsonProperty("currency")                 // Maps this field to "currency" in the JSON

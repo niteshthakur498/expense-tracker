@@ -1,0 +1,15 @@
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(1,'Food','Food Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(2,'Rent','Rent Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(3,'Travel','Travel Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(4,'Payment','Payment Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(5,'Investment','Investment Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(6,'Entertainment','Entertainment Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(7,'Medical','Medical Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(8,'Loans','Loans Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(9,'Bill Payments','Bill Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(10,'Education','Education Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(11,'Application and Software','Software Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(12,'Insurance','Insurance Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(13,'Fuel','Fuel Related Expenses');
+INSERT INTO et_category(category_id, category_title, category_description) VALUES(14,'Miscellaneous','Miscellaneous Expenses');
+COMMIT;

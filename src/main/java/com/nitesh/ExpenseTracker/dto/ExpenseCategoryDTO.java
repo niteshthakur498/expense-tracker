@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExpenseCategoryDTO {
-    private String categoryId;
+    private Long categoryId;
 
     private String categoryTitle;
 
