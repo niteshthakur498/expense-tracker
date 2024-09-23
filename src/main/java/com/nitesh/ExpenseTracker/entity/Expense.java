@@ -68,6 +68,9 @@ public class Expense {
     @Column(name = "expense_input_time")
     private LocalDateTime expenseInputTime;
 
+    @Column(name = "event_id")
+    private Long eventId;
+
     @PrePersist
     public void onCreate() {
         this.expenseInputTime = LocalDateTime.now();

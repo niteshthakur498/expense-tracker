@@ -54,4 +54,7 @@ public class ExpenseRequestDTO {
     @NotBlank(message = "")
     @JsonProperty("currency")                 // Maps this field to "currency" in the JSON
     private String currency;
+
+    @JsonProperty("eventId")                 // Maps this field to "currency" in the JSON
+    private Long eventId;
 }

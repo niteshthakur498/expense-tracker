@@ -18,4 +18,6 @@ public interface ExpenseService {
     ExpenseResponseDTO getExpenseById(Long userId, Long expenseId);
 
     List<ExpenseResponseDTO> getAllUserExpenses(Long userId);
+
+    List<ExpenseResponseDTO> getExpenseByUserAndEvent(Long userId, Long eventID);
 }

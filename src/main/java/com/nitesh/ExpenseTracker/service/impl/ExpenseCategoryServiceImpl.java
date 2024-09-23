@@ -4,7 +4,6 @@ import com.nitesh.ExpenseTracker.dto.ExpenseCategoryDTO;
 import com.nitesh.ExpenseTracker.entity.ExpenseCategory;
 import com.nitesh.ExpenseTracker.exception.ResourceNotFoundException;
 import com.nitesh.ExpenseTracker.mapper.ExpenseCategoryMapper;
-import com.nitesh.ExpenseTracker.mapper.ExpenseMapper;
 import com.nitesh.ExpenseTracker.repository.ExpenseCategoryRepository;
 import com.nitesh.ExpenseTracker.service.ExpenseCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

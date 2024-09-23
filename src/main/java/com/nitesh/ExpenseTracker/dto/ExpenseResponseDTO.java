@@ -40,4 +40,6 @@ public class ExpenseResponseDTO {
 
     private LocalDateTime expenseInputTime;        // Date when the expense was created
 
+    private Long eventId;
+
 }

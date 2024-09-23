@@ -2,10 +2,11 @@ package com.nitesh.ExpenseTracker.validator.impl;
 
 import com.nitesh.ExpenseTracker.dto.ErrorDetail;
 import com.nitesh.ExpenseTracker.dto.ExpenseRequestDTO;
-import com.nitesh.ExpenseTracker.entity.Expense;
 import com.nitesh.ExpenseTracker.entity.ExpenseCategory;
+import com.nitesh.ExpenseTracker.entity.ExpenseEvent;
 import com.nitesh.ExpenseTracker.exception.ValidationException;
 import com.nitesh.ExpenseTracker.repository.ExpenseCategoryRepository;
+import com.nitesh.ExpenseTracker.repository.ExpenseEventRepository;
 import com.nitesh.ExpenseTracker.validator.ExpenseValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +22,26 @@ import java.util.Optional;
 public class ExpenseValidatorImpl implements ExpenseValidator {
 
     private final ExpenseCategoryRepository expenseCategoryRepository;
+    private final ExpenseEventRepository expenseEventRepository;
 
     @Autowired
-    public ExpenseValidatorImpl(ExpenseCategoryRepository expenseCategoryRepository) {
+    public ExpenseValidatorImpl(ExpenseCategoryRepository expenseCategoryRepository, ExpenseEventRepository expenseEventRepository) {
         this.expenseCategoryRepository = expenseCategoryRepository;
+        this.expenseEventRepository = expenseEventRepository;
     }
 
     @Override
     public void validateExpense(ExpenseRequestDTO expenseRequest) {
         log.debug("Starting Validating Expense Request..");
         List<ErrorDetail> errors = new ArrayList<>();
-
+        log.info("Event Id: " + expenseRequest.getEventId());
         //Validating Amount
         validateAmount(expenseRequest.getExpenseAmount(), errors);
 
         //Validating Categories
         validateCategory(expenseRequest.getCategoryId(), errors);
+
+        validateEvent(expenseRequest.getEventId(), errors);
 
         if (!errors.isEmpty()) {
             throw new ValidationException("Validations Failed", errors);
@@ -55,6 +60,19 @@ public class ExpenseValidatorImpl implements ExpenseValidator {
         if (expenseCategory.isEmpty()) {
             errors.add(new ErrorDetail("categoryId", "Invalid Category Id"));
         }
+    }
+
+    private void validateEvent(Long eventId, List<ErrorDetail> errors) {
+        log.debug("Starting Validating Expense Event..");
+        if (eventId != null) {
+            Optional<ExpenseEvent> expenseEvent = expenseEventRepository.findById(eventId);
+
+            if (expenseEvent.isEmpty()) {
+                errors.add(new ErrorDetail("eventId", "Invalid Event Id"));
+            }
+        }
+
+
     }
 
     private void validateAmount(BigDecimal amount, List<ErrorDetail> errors) {

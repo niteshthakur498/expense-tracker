@@ -30,6 +30,13 @@ public class ExpenseController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{userId}/expense-event/{eventId}/expenses")
+    public ResponseEntity<ResponseWrapper<List<ExpenseResponseDTO>>> getExpenseByUserAndEvent(@PathVariable Long userId, @PathVariable Long eventId) {
+        List<ExpenseResponseDTO> userExpenses = expenseService.getExpenseByUserAndEvent(userId, eventId);
+        ResponseWrapper<List<ExpenseResponseDTO>> response = new ResponseWrapper<>(HttpStatus.OK.value(), "Successfully Retrieved", userExpenses, null);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/{userId}/expenses")
     public ResponseEntity<ResponseWrapper<ExpenseResponseDTO>> createExpense(@PathVariable Long userId,
                                                                              @RequestBody ExpenseRequestDTO expenseRequest) {

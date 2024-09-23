@@ -74,4 +74,13 @@ public class ExpenseServiceImpl implements ExpenseService {
                 .map(expenseMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ExpenseResponseDTO> getExpenseByUserAndEvent(Long userId, Long eventId) {
+        return expenseRepository.findByUserIdAndEventId(userId, eventId)
+                .stream()
+                .map(expenseMapper::toResponseDTO)
+                .collect(Collectors.toList());
+
+    }
 }
