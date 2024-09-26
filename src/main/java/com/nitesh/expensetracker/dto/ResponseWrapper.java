@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -27,7 +29,8 @@ public class ResponseWrapper<T> {
         this.status = status;
         this.message = message;
         this.data = data;
-        this.errors = errors;
+        this.errors = Objects.requireNonNullElseGet(errors, ArrayList::new);
+        ;
     }
 
 }
