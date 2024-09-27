@@ -3,6 +3,7 @@ package com.nitesh.expensetracker.securitymanagement.controller;
 import com.nitesh.expensetracker.securitymanagement.dto.ResponseWrapper;
 import com.nitesh.expensetracker.securitymanagement.dto.UserRegisterRequestDTO;
 import com.nitesh.expensetracker.securitymanagement.service.UserAuthService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class UserAuthController {
 
 
     @PostMapping("/register")
-    ResponseEntity<ResponseWrapper<String>> registerUser(@RequestBody UserRegisterRequestDTO userRegisterRequest) {
+    ResponseEntity<ResponseWrapper<String>> registerUser(@Valid @RequestBody UserRegisterRequestDTO userRegisterRequest) {
         this.userAuthService.registerUser(userRegisterRequest);
         ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(),
                 "Successfully Registered",
