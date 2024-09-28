@@ -6,7 +6,7 @@ import com.nitesh.expensetracker.securitymanagement.dto.UserRegisterRequestDTO;
 
 public interface UserAuthService {
 
-    String registerUser(UserRegisterRequestDTO userRegisterRequestDTO);
+    String signup(UserRegisterRequestDTO userRegisterRequestDTO);
 
-    UserLoginResponseDTO login(String email, String password);
+    UserLoginResponseDTO login(UserLoginRequestDTO loginRequest);
 }

@@ -1,6 +1,8 @@
 package com.nitesh.expensetracker.securitymanagement.controller;
 
 import com.nitesh.expensetracker.securitymanagement.dto.ResponseWrapper;
+import com.nitesh.expensetracker.securitymanagement.dto.UserLoginRequestDTO;
+import com.nitesh.expensetracker.securitymanagement.dto.UserLoginResponseDTO;
 import com.nitesh.expensetracker.securitymanagement.dto.UserRegisterRequestDTO;
 import com.nitesh.expensetracker.securitymanagement.service.UserAuthService;
 import jakarta.validation.Valid;
@@ -24,12 +26,24 @@ public class UserAuthController {
     }
 
 
-    @PostMapping("/register")
-    ResponseEntity<ResponseWrapper<String>> registerUser(@Valid @RequestBody UserRegisterRequestDTO userRegisterRequest) {
-        this.userAuthService.registerUser(userRegisterRequest);
+    @PostMapping("/signup")
+    ResponseEntity<ResponseWrapper<String>> signup(@Valid @RequestBody UserRegisterRequestDTO userRegisterRequest) {
+        this.userAuthService.signup(userRegisterRequest);
         ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(),
                 "Successfully Registered",
                 "",
+                null);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(response);
+
+    }
+
+    @PostMapping("/login")
+    ResponseEntity<ResponseWrapper<UserLoginResponseDTO>> registerUser(@Valid @RequestBody UserLoginRequestDTO loginRequest) {
+        UserLoginResponseDTO loginResponse = this.userAuthService.login(loginRequest);
+        ResponseWrapper<UserLoginResponseDTO> response = new ResponseWrapper<>(HttpStatus.OK.value(),
+                "Successfully Login",
+                loginResponse,
                 null);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(response);

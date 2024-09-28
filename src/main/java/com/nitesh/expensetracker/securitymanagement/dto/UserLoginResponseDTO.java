@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,6 +15,8 @@ public class UserLoginResponseDTO {
 
     private String email;
 
+    private String tokenType = "Bearer";
+
     private String accessToken;  // Access token for authentication
 
     private long accessTokenExpiry;  // Expiration time for access token
@@ -20,5 +24,7 @@ public class UserLoginResponseDTO {
     private String refreshToken;  // Refresh token for obtaining a new access token
 
     private long refreshTokenExpiry;  // Expiration time for refresh token
+
+    private List<String> roles;//Roles also to be sent back to client so that he can act accordingly
 
 }

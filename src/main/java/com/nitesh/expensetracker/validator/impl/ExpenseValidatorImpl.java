@@ -25,7 +25,8 @@ public class ExpenseValidatorImpl implements ExpenseValidator {
     private final ExpenseEventRepository expenseEventRepository;
 
     @Autowired
-    public ExpenseValidatorImpl(ExpenseCategoryRepository expenseCategoryRepository, ExpenseEventRepository expenseEventRepository) {
+    public ExpenseValidatorImpl(ExpenseCategoryRepository expenseCategoryRepository,
+                                ExpenseEventRepository expenseEventRepository) {
         this.expenseCategoryRepository = expenseCategoryRepository;
         this.expenseEventRepository = expenseEventRepository;
     }
@@ -34,7 +35,7 @@ public class ExpenseValidatorImpl implements ExpenseValidator {
     public void validateExpense(ExpenseRequestDTO expenseRequest) {
         log.debug("Starting Validating Expense Request..");
         List<ErrorDetail> errors = new ArrayList<>();
-        log.info("Event Id: " + expenseRequest.getEventId());
+        log.info("Event Id: {}", expenseRequest.getEventId());
         //Validating Amount
         validateAmount(expenseRequest.getExpenseAmount(), errors);
 
@@ -42,13 +43,14 @@ public class ExpenseValidatorImpl implements ExpenseValidator {
         validateCategory(expenseRequest.getCategoryId(), errors);
 
         validateEvent(expenseRequest.getEventId(), errors);
-
+        log.debug(errors.toString());
         if (!errors.isEmpty()) {
             throw new ValidationException("Validations Failed", errors);
         }
     }
 
-    private void validateCategory(Long categoryId, List<ErrorDetail> errors) {
+    private void validateCategory(Long categoryId,
+                                  List<ErrorDetail> errors) {
         log.debug("Starting Validating Expense Category..");
         if (categoryId == null || categoryId <= 0) {
             errors.add(new ErrorDetail("categoryId", "Category Id cannot be null"));
@@ -62,7 +64,8 @@ public class ExpenseValidatorImpl implements ExpenseValidator {
         }
     }
 
-    private void validateEvent(Long eventId, List<ErrorDetail> errors) {
+    private void validateEvent(Long eventId,
+                               List<ErrorDetail> errors) {
         log.debug("Starting Validating Expense Event..");
         if (eventId != null) {
             Optional<ExpenseEvent> expenseEvent = expenseEventRepository.findById(eventId);
@@ -75,7 +78,8 @@ public class ExpenseValidatorImpl implements ExpenseValidator {
 
     }
 
-    private void validateAmount(BigDecimal amount, List<ErrorDetail> errors) {
+    private void validateAmount(BigDecimal amount,
+                                List<ErrorDetail> errors) {
         log.debug("Starting Validating Expense Amount..");
         if (amount.compareTo(new BigDecimal(0)) <= 0) {
             errors.add(new ErrorDetail("expenseAmount", "Expense Amount cannot be less than or Equal to 0"));

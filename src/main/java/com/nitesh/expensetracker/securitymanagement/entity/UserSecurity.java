@@ -22,10 +22,10 @@ public class UserSecurity {
     @Column(name = "user_id", nullable = false)
     private Long userId; // Foreign key to sm_user
 
-    @Column(name = "reset_token", length = 255)
+    @Column(name = "refresh_token", length = 255)
     private String resetToken;
 
-    @Column(name = "reset_token_expiration")
+    @Column(name = "refresh_token_expiration")
     private LocalDateTime resetTokenExpiration;
 
     @Column(name = "is_two_factor_enabled", nullable = false)

@@ -2,6 +2,7 @@ package com.nitesh.expensetracker.securitymanagement.exceptions;
 
 import com.nitesh.expensetracker.securitymanagement.dto.ErrorDetail;
 import com.nitesh.expensetracker.securitymanagement.dto.ResponseWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +10,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @ControllerAdvice
 @Order(1)
+@Slf4j
 public class AuthGlobalExceptionHandler {
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ResponseWrapper<String>> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
@@ -95,6 +94,8 @@ public class AuthGlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseWrapper<String>> handleGenericException(Exception ex) {
+        log.warn("Error Message --> {}", ex.getMessage());
+        log.debug("Stack Trace --> {}", Arrays.toString(ex.getStackTrace()));
         ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(),
                 "An unexpected error occurred.",
                 "",
