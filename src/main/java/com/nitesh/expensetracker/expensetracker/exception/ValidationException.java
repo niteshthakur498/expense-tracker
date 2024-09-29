@@ -1,13 +1,11 @@
-package com.nitesh.expensetracker.securitymanagement.exceptions;
+package com.nitesh.expensetracker.expensetracker.exception;
 
-import com.nitesh.expensetracker.securitymanagement.dto.ErrorDetail;
-import lombok.Getter;
+import com.nitesh.expensetracker.expensetracker.dto.ErrorDetail;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
-@Getter
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class ValidationException extends RuntimeException {
     private final List<ErrorDetail> errors;
@@ -18,4 +16,7 @@ public class ValidationException extends RuntimeException {
         this.errors = errors;
     }
 
+    public List<ErrorDetail> getErrors() {
+        return errors;
+    }
 }

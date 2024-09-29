@@ -1,6 +1,5 @@
 package com.nitesh.expensetracker.securitymanagement.mapper;
 
-import com.nitesh.expensetracker.entity.Expense;
 import com.nitesh.expensetracker.securitymanagement.dto.UserRegisterRequestDTO;
 import com.nitesh.expensetracker.securitymanagement.entity.User;
 
@@ -9,5 +8,6 @@ public interface UserMapper {
 
     UserRegisterRequestDTO toResponseDTO(User user);
 
-    void map(UserRegisterRequestDTO userRegisterRequest, Expense existingUser);
+    void map(UserRegisterRequestDTO userRegisterRequest,
+             User existingUser);
 }
