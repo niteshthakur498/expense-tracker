@@ -2,6 +2,7 @@ package com.nitesh.expensetracker.securitymanagement.dto;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseWrapper<T> {
@@ -25,7 +27,10 @@ public class ResponseWrapper<T> {
     private List<ErrorDetail> errors;
 
 
-    public ResponseWrapper(int status, String message, T info, List<ErrorDetail> errors) {
+    public ResponseWrapper(int status,
+                           String message,
+                           T info,
+                           List<ErrorDetail> errors) {
         this.timestamp = LocalDateTime.now();
         this.status = status;
         this.message = message;
