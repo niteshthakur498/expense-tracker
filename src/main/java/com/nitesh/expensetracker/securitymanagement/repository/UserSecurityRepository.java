@@ -9,4 +9,7 @@ import java.util.Optional;
 @Repository
 public interface UserSecurityRepository extends JpaRepository<UserSecurity, Long> {
     Optional<UserSecurity> findByUserId(Long userId);
+
+    Optional<UserSecurity> findByUserIdAndRefreshToken(Long userId,
+                                                       String refreshToken);
 }

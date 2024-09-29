@@ -1,5 +1,6 @@
 package com.nitesh.expensetracker.securitymanagement.service.impl;
 
+import com.nitesh.expensetracker.securitymanagement.dto.RefreshTokenRequestDTO;
 import com.nitesh.expensetracker.securitymanagement.dto.UserLoginRequestDTO;
 import com.nitesh.expensetracker.securitymanagement.dto.UserLoginResponseDTO;
 import com.nitesh.expensetracker.securitymanagement.dto.UserRegisterRequestDTO;
@@ -110,7 +111,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         refreshTokenService.updateRefreshToken(authenticatedUser.getId(), refreshToken, refreshTokenExpirationUnix);
 
 
-        UserLoginResponseDTO userLoginResponse = new UserLoginResponseDTO(
+        return new UserLoginResponseDTO(
                 loginRequest.getEmail(),
                 "Bearer",
                 accessToken,
@@ -119,8 +120,32 @@ public class UserAuthServiceImpl implements UserAuthService {
                 refreshTokenExpirationUnix,
                 new ArrayList<>()
         );
-
-        log.debug("Security Authentication working fine.......{}", userLoginResponse.toString());
-        return userLoginResponse;
     }
+
+    @Override
+    public UserLoginResponseDTO refreshToken(RefreshTokenRequestDTO refreshTokenRequest) {
+
+        User user = userRepository.findByEmail(refreshTokenRequest.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("User not found.."));
+
+        refreshTokenService.validateRefreshToken(user.getId(), refreshTokenRequest.getRefreshToken());
+
+        String accessToken = jwtService.generateToken(user);
+        String refreshToken = refreshTokenService.generateRefreshToken();
+        long accessTokenExpirationUnix = System.currentTimeMillis() + jwtService.getExpirationTime();
+        long refreshTokenExpirationUnix = System.currentTimeMillis() + refreshTokenService.getRefreshExpirationTime();
+        refreshTokenService.updateRefreshToken(user.getId(), refreshToken, refreshTokenExpirationUnix);
+
+        return new UserLoginResponseDTO(
+                user.getEmail(),
+                "Bearer",
+                accessToken,
+                accessTokenExpirationUnix,
+                refreshToken,
+                refreshTokenExpirationUnix,
+                new ArrayList<>()
+        );
+    }
+
+
 }

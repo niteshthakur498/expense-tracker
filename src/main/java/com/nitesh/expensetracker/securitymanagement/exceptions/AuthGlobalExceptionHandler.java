@@ -94,10 +94,20 @@ public class AuthGlobalExceptionHandler {
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<ResponseWrapper<String>> handleExpiredJwtException(Exception ex) {
+    public ResponseEntity<ResponseWrapper<String>> handleExpiredJwtException(ExpiredJwtException ex) {
         ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.UNAUTHORIZED.value(),
                 "JWT Token Expired...",
                 "",
+                null);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(response);
+    }
+
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ResponseEntity<ResponseWrapper<String>> handleInvalidRefreshTokenException(InvalidRefreshTokenException ex) {
+        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.UNAUTHORIZED.value(),
+                "Refresh Token is Invalid....",
+                ex.getMessage(),
                 null);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(response);

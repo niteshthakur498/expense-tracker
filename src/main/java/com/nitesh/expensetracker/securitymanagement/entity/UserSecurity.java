@@ -23,10 +23,10 @@ public class UserSecurity {
     private Long userId; // Foreign key to sm_user
 
     @Column(name = "refresh_token", length = 255)
-    private String resetToken;
+    private String refreshToken;
 
     @Column(name = "refresh_token_expiration")
-    private LocalDateTime resetTokenExpiration;
+    private LocalDateTime refreshTokenExpiration;
 
     @Column(name = "is_two_factor_enabled", nullable = false)
     private Boolean isTwoFactorEnabled = false; // Default to FALSE
