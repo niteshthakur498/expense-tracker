@@ -6,12 +6,14 @@ import com.nitesh.expensetracker.securitymanagement.dto.UserRegisterRequestDTO;
 import com.nitesh.expensetracker.securitymanagement.entity.User;
 import com.nitesh.expensetracker.securitymanagement.entity.UserPreferences;
 import com.nitesh.expensetracker.securitymanagement.entity.UserProfile;
+import com.nitesh.expensetracker.securitymanagement.entity.UserSecurity;
 import com.nitesh.expensetracker.securitymanagement.exceptions.UserAlreadyExistsException;
 import com.nitesh.expensetracker.securitymanagement.exceptions.UserNotFoundException;
 import com.nitesh.expensetracker.securitymanagement.mapper.UserMapper;
 import com.nitesh.expensetracker.securitymanagement.repository.UserPreferencesRepository;
 import com.nitesh.expensetracker.securitymanagement.repository.UserProfileRepository;
 import com.nitesh.expensetracker.securitymanagement.repository.UserRepository;
+import com.nitesh.expensetracker.securitymanagement.repository.UserSecurityRepository;
 import com.nitesh.expensetracker.securitymanagement.service.UserAuthService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 @Service
@@ -32,6 +37,7 @@ public class UserAuthServiceImpl implements UserAuthService {
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
     private final UserPreferencesRepository userPreferencesRepository;
+
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserMapper userMapper;
@@ -53,6 +59,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         this.userMapper = userMapper;
         this.jwtService = jwtService;
         this.refreshTokenService = refreshTokenService;
+
     }
 
     @Override
@@ -97,8 +104,10 @@ public class UserAuthServiceImpl implements UserAuthService {
         String accessToken = jwtService.generateToken(authenticatedUser);
         String refreshToken = refreshTokenService.generateRefreshToken();
         log.debug("refreshToken Token Generated.....");
+
         long accessTokenExpirationUnix = System.currentTimeMillis() + jwtService.getExpirationTime();
         long refreshTokenExpirationUnix = System.currentTimeMillis() + refreshTokenService.getRefreshExpirationTime();
+        refreshTokenService.updateRefreshToken(authenticatedUser.getId(), refreshToken, refreshTokenExpirationUnix);
 
 
         UserLoginResponseDTO userLoginResponse = new UserLoginResponseDTO(

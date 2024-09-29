@@ -2,6 +2,7 @@ package com.nitesh.expensetracker.securitymanagement.exceptions;
 
 import com.nitesh.expensetracker.securitymanagement.dto.ErrorDetail;
 import com.nitesh.expensetracker.securitymanagement.dto.ResponseWrapper;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ import java.util.*;
 public class AuthGlobalExceptionHandler {
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ResponseWrapper<String>> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
-        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(),
+        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.CONFLICT.value(),
                 ex.getMessage(),
                 "",
                 null);
@@ -28,7 +29,7 @@ public class AuthGlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ResponseWrapper<String>> handleUserNotFoundException(UserNotFoundException ex) {
-        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(),
+        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.NOT_FOUND.value(),
                 ex.getMessage(),
                 "",
                 null);
@@ -38,7 +39,7 @@ public class AuthGlobalExceptionHandler {
 
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ResponseWrapper<String>> handleInvalidCredentialsException(InvalidCredentialsException ex) {
-        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(),
+        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.UNAUTHORIZED.value(),
                 ex.getMessage(),
                 "",
                 null);
@@ -48,7 +49,7 @@ public class AuthGlobalExceptionHandler {
 
     @ExceptionHandler(AccountLockedException.class)
     public ResponseEntity<ResponseWrapper<String>> handleAccountLockedException(AccountLockedException ex) {
-        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(),
+        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.FORBIDDEN.value(),
                 ex.getMessage(),
                 "",
                 null);
@@ -58,7 +59,7 @@ public class AuthGlobalExceptionHandler {
 
     @ExceptionHandler(InsufficientPermissionsException.class)
     public ResponseEntity<ResponseWrapper<String>> handleInsufficientPermissionsException(InsufficientPermissionsException ex) {
-        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(),
+        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.FORBIDDEN.value(),
                 ex.getMessage(),
                 "",
                 null);
@@ -68,7 +69,7 @@ public class AuthGlobalExceptionHandler {
 
     @ExceptionHandler(RoleNotFoundException.class)
     public ResponseEntity<ResponseWrapper<String>> handleRoleNotFoundException(RoleNotFoundException ex) {
-        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(),
+        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.NOT_FOUND.value(),
                 ex.getMessage(),
                 "",
                 null);
@@ -83,7 +84,7 @@ public class AuthGlobalExceptionHandler {
                 .getFieldErrors()
                 .forEach(error ->
                         errors.add(new ErrorDetail(error.getField(), error.getDefaultMessage())));
-        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(),
+        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.BAD_REQUEST.value(),
                 "Request Field Validations Failed",
                 "",
                 errors);
@@ -92,15 +93,15 @@ public class AuthGlobalExceptionHandler {
                 .body(response);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseWrapper<String>> handleGenericException(Exception ex) {
-        log.warn("Error Message --> {}", ex.getMessage());
-        log.debug("Stack Trace --> {}", Arrays.toString(ex.getStackTrace()));
-        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.OK.value(),
-                "An unexpected error occurred.",
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ResponseWrapper<String>> handleExpiredJwtException(Exception ex) {
+        ResponseWrapper<String> response = new ResponseWrapper<>(HttpStatus.UNAUTHORIZED.value(),
+                "JWT Token Expired...",
                 "",
                 null);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(response);
     }
+
+
 }
