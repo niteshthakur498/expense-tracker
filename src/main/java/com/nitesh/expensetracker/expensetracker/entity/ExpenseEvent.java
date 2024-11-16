@@ -3,6 +3,7 @@ package com.nitesh.expensetracker.expensetracker.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -34,6 +35,9 @@ public class ExpenseEvent {
 
     @Column(name = "event_input_time")
     private LocalDateTime eventInputTime;
+
+    @Column(name = "budget")
+    private BigDecimal budget;
 
     @PrePersist
     public void onCreate() {

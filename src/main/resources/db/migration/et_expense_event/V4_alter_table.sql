@@ -1,0 +1,2 @@
+ALTER TABLE et_expense_event
+ADD BUDGET BIGINT;

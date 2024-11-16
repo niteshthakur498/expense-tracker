@@ -8,10 +8,17 @@ import com.nitesh.expensetracker.expensetracker.mapper.ExpenseMapper;
 import com.nitesh.expensetracker.expensetracker.repository.ExpenseRepository;
 import com.nitesh.expensetracker.expensetracker.service.ExpenseService;
 import com.nitesh.expensetracker.expensetracker.validator.ExpenseValidator;
+import com.nitesh.expensetracker.kafkaserviceconnect.dto.PublishMessageRequestDto;
+import com.nitesh.expensetracker.kafkaserviceconnect.model.BudgetExceededMessage;
+import com.nitesh.expensetracker.kafkaserviceconnect.model.KafkaMessage;
+import com.nitesh.expensetracker.kafkaserviceconnect.service.KafkaProducerService;
+import com.nitesh.expensetracker.kafkaserviceconnect.util.KafkaServiceClientUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,22 +29,29 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final ExpenseRepository expenseRepository;
     private final ExpenseValidator expenseValidator;
     private final ExpenseMapper expenseMapper;
+    private final BudgetService budgetService;
 
     @Autowired
     public ExpenseServiceImpl(ExpenseRepository expenseRepository,
                               ExpenseMapper expenseMapper,
-                              ExpenseValidator expenseValidator) {
+                              ExpenseValidator expenseValidator,
+                              BudgetService budgetService
+    ) {
         this.expenseRepository = expenseRepository;
         this.expenseMapper = expenseMapper;
         this.expenseValidator = expenseValidator;
+        this.budgetService = budgetService;
     }
 
     @Override
     public ExpenseResponseDTO addExpense(ExpenseRequestDTO expenseRequest) {
         expenseValidator.validateExpense(expenseRequest);
         Expense expense = expenseMapper.toEntity(expenseRequest);
-        Expense cratedExpense = expenseRepository.save(expense);
-        return expenseMapper.toResponseDTO(cratedExpense);
+        Expense createdExpense = expenseRepository.save(expense);
+
+        budgetService.processBudgetFunctionality(createdExpense.getUserId(), createdExpense.getEventId());
+
+        return expenseMapper.toResponseDTO(createdExpense);
     }
 
     @Override

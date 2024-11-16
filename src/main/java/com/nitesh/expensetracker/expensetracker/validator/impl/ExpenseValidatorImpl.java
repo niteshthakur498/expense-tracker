@@ -35,7 +35,7 @@ public class ExpenseValidatorImpl implements ExpenseValidator {
     public void validateExpense(ExpenseRequestDTO expenseRequest) {
         log.debug("Starting Validating Expense Request..");
         List<ErrorDetail> errors = new ArrayList<>();
-        log.info("Event Id: {}", expenseRequest.getEventId());
+        log.debug("Event Id: {}", expenseRequest.getEventId());
         //Validating Amount
         validateAmount(expenseRequest.getExpenseAmount(), errors);
 

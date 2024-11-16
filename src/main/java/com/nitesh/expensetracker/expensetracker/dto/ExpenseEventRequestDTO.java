@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,5 +22,8 @@ public class ExpenseEventRequestDTO {
 
     @JsonProperty("eventDescription")
     private String eventDescription;
+
+    @JsonProperty("budget")
+    private BigDecimal budget;
 
 }
