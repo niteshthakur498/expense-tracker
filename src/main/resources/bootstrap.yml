@@ -3,3 +3,12 @@ spring:
     name: Expense-Tracker  # The name of your application
   config:
     import: optional:configserver:http://localhost:8001
+  cloud:
+    config:
+      uri: http://localhost:8001
+      fail-fast: true
+      retry:
+        max-attempts: 5  # Maximum number of retry attempts
+        initial-interval: 1000  # Initial interval between retries in milliseconds (e.g., 1 second)
+        max-interval: 5000  # Maximum interval between retries in milliseconds (e.g., 5 seconds)
+        multiplier: 1.5  # Multiplier for backoff strategy (e.g., exponential backoff)
