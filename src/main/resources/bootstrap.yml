@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: Expense-Tracker  # The name of your application
+  config:
+    import: optional:configserver:http://localhost:8001
